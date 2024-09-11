@@ -1,64 +1,99 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Assuming paintings.json content is stored in a variable called content
-    const paintingsData = JSON.parse(content);
-    const thumbnailList = document.querySelector('ul');
-    const figure = document.querySelector('figure');
-    const title = document.querySelector('h2');
-    const artist = document.querySelector('h3');
-    const description = document.querySelector('#description');
+    // Fetch the paintings.json file
+    fetch('paintings.json')
+        .then(response => response.json())
+        .then(data => {
+            // Process the JSON data once it's loaded
+            paintings(data);
+        })
+
+    // Helper function to load an image with flexible file extensions
+    // Source: ChatGPT
+    function getImagePath(basePath, imageName) {
+        const jpgPath = `${basePath}/${imageName}.jpg`;
+        const pngPath = `${basePath}/${imageName}.png`;
+        const img = new Image();
+
+        return new Promise((resolve) => {
+            img.onload = () => resolve(jpgPath);
+            img.onerror = () => {
+                img.src = pngPath;
+                img.onload = () => resolve(pngPath);
+            };
+            img.src = jpgPath;
+        });
+    }
 
     // Load thumbnails
-    paintingsData.forEach(painting => {
-        const li = document.createElement('li');
-        const img = document.createElement('img');
-        img.src = `images/small/${painting.id}.png`;  // Set the thumbnail image
-        img.alt = painting.title;  // Add alt text for accessibility
-        img.dataset.id = painting.id;  // Store painting id in dataset for easy retrieval
-        li.appendChild(img);
-        thumbnailList.appendChild(li);
-    });
+    function paintings(data) {
+        const ulElement = document.querySelector('#paintings ul');
+        data.forEach(painting => {
+            const li = document.createElement('li');
+            const img = document.createElement('img');
 
-    // Event delegation to handle painting clicks
-    thumbnailList.addEventListener('click', function(event) {
+            getImagePath('images/small', painting.id).then(smallImagePath => {
+                img.src = smallImagePath;  // Set the thumbnail image
+                img.alt = painting.title;  // Add alt text for accessibility
+                img.dataset.id = painting.id;  // Store painting id in dataset for easy retrieval
+                li.appendChild(img);
+                ulElement.appendChild(li);
+            });
+        });
+
+        // Event delegation to handle painting clicks
+        ulElement.addEventListener('click', function(event) {
         if (event.target.tagName === 'IMG') {
             const paintingId = event.target.dataset.id;
-            const painting = paintingsData.find(p => p.id === paintingId);
+            const painting = data.find(p => p.id === paintingId);
 
-            // Clear the current figure content
-            figure.innerHTML = '';
+            if (painting) {
+                const figureElement = document.querySelector('figure');
+                const titleElement = document.querySelector('#title');
+                const artistElement = document.querySelector('#artist');
+                const descriptionElement = document.querySelector('#description');
 
-            // Set the large image, title, and artist
-            const largeImg = document.createElement('img');
-            largeImg.src = `images/large/${painting.id}.jpg`;
-            largeImg.alt = painting.title;
-            figure.appendChild(largeImg);
-            title.textContent = painting.title;
-            artist.textContent = painting.artist;
+                // Clear the previous image and features from the <figure> element
+                figureElement.innerHTML = '';
+                descriptionElement.textContent = ''; // Also clear the previous description
 
-            // Add feature rectangles
-            painting.features.forEach(feature => {
-                const box = document.createElement('div');
-                box.classList.add('box');
-                const [x1, y1] = feature.upperLeft;
-                const [x2, y2] = feature.lowerRight;
-                const width = x2 - x1;
-                const height = y2 - y1;
-                box.style.left = `${x1}px`;
-                box.style.top = `${y1}px`;
-                box.style.width = `${width}px`;
-                box.style.height = `${height}px`;
-                box.style.position = 'absolute';
-
-                // Mouseover and mouseout events for showing the description
-                box.addEventListener('mouseover', function() {
-                    description.textContent = feature.description;
-                });
-                box.addEventListener('mouseout', function() {
-                    description.textContent = '';
+                // Set the large image, title, and artist
+                getImagePath('images/large', painting.id).then(largeImagePath => {
+                    const fullImg = document.createElement('img');
+                    fullImg.src = largeImagePath;
+                    fullImg.alt = painting.title;
+                    fullImg.id = 'full';
+                    figureElement.appendChild(fullImg);
                 });
 
-                figure.appendChild(box);
-            });
+                title.textContent = painting.title;
+                artist.textContent = painting.artist;
+
+                // Add feature rectangles
+                painting.features.forEach(feature => {
+                    const box = document.createElement('div');
+                    box.classList.add('box');
+                    const [x1, y1] = feature.upperLeft;
+                    const [x2, y2] = feature.lowerRight;
+                    const width = x2 - x1;
+                    const height = y2 - y1;
+                    box.style.left = `${x1}px`;
+                    box.style.top = `${y1}px`;
+                    box.style.width = `${width}px`;
+                    box.style.height = `${height}px`;
+                    box.style.position = 'absolute';
+
+                    // Mouseover and mouseout events for showing the description
+                    box.addEventListener('mouseover', function() {
+                        descriptionElement.textContent = feature.description;
+                    });
+                    box.addEventListener('mouseout', function() {
+                        descriptionElement.textContent = '';
+                    });
+
+                    figureElement.appendChild(box);
+                });
+            }
         }
-    });
+        });
+    }
 });
