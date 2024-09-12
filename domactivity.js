@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     title = document.getElementById("title");
     artist = document.getElementById("artist");
     figure = document.querySelector("figure")
-    desc = document.getElementById("")
+    desc = document.getElementById("description")
+
     const data = JSON.parse(content);
     arr = []
 
@@ -48,10 +49,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 rect.style.width = feat.lowerRight[0] - feat.upperLeft[0] + "px";
 
                 rect.addEventListener("mouseover", ()=>{
-
+                    desc.textContent = feat.description;
                 })
                 rect.addEventListener("mouseout", ()=>{
-                    
+                    desc.textContent = "";
                 })
             });
 
