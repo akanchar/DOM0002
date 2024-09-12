@@ -52,6 +52,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 // ADd mouseover event to display feature description when hovering over the rectangle
                 box.addEventListener('mouseover', function () {
                     descriptionElement.textContent = feature.description;
+                });
+
+                // Add mouseout event to clear the feature description when the mouse leaves
+                box.addEventListener('mouseout', function () {
+                    descriptionElement.textContent = '';
                 })
             })
         }
