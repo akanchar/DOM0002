@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     fullPic = document.getElementById("full");
     title = document.getElementById("title");
     artist = document.getElementById("artist");
-
+    figure = document.querySelector("figure")
+    desc = document.getElementById("")
     const data = JSON.parse(content);
     arr = []
 
@@ -28,9 +29,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
         console.log(e.target.nodeName);
         if (e.target && e.target.nodeName == "IMG"){
             console.log("lalala")
-            //document.querySelector("figure").innerHTML = "";
+            document.querySelector("figure").innerHTML = "";
             title.innerHTML = arr[e.target.id].title
             artist.innerHTML = arr[e.target.id].artist
+            fullPic = document.createElement('img');
+            figure.append(fullPic);
             fullPic.src = "../inclassdomactivity002/images/large/" + arr[e.target.id].id + ".jpg";
             
             arr[e.target.id].features.forEach(feat =>{
@@ -43,7 +46,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 rect.style.top = feat.upperLeft[1] + "px";
                 rect.style.height =  feat.lowerRight[1] - feat.upperLeft[1] + "px";
                 rect.style.width = feat.lowerRight[0] - feat.upperLeft[0] + "px";
+
+                rect.addEventListener("mouseover", ()=>{
+
+                })
+                rect.addEventListener("mouseout", ()=>{
+                    
+                })
             });
+
             
             
         }
