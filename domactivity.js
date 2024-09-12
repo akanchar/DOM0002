@@ -1,4 +1,3 @@
-/* add your code here */
 document.addEventListener('DOMContentLoaded', function () {
     // Assuming the JSON data is stored in a variable named 'paintingsData'
     const paintingsData = JSON.parse(content); // Parses the JSON data to JavaScript object
@@ -6,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const figureElement = document.querySelector('figure');
     const titleElement = document.querySelector('#title');
     const artistElement = document.querySelector('#artist');
+    const descriptionElement = document.querySelector('#description'); // Updated ID to match CSS
 
     // Loop through the paintings array and create thumbnail images
     paintingsData.forEach(painting => {
@@ -19,15 +19,41 @@ document.addEventListener('DOMContentLoaded', function () {
             const paintingId = event.target.dataset.id;
             const selectedPainting = paintingsData.find(p => p.id === paintingId);
 
+            // Clear the figure and feature description elements
             figureElement.innerHTML = '';
+        
 
+            // Create a large image for the selected painting
             const largeImage = document.createElement('img');
-            largeImage.src = `images/large/${selectedPainting.id}.jpg`; // Set the path to the larger image using the id
+            largeImage.src = `images/large/${selectedPainting.id}.jpg`;
             largeImage.alt = selectedPainting.title;
             figureElement.appendChild(largeImage);
 
             titleElement.textContent = selectedPainting.title;
             artistElement.textContent = selectedPainting.artist;
+
+            selectedPainting.features.forEach(feature => {
+                const box = document.createElement('div');
+                box.classList.add('box');
+
+                // Set the CSS properties for the recetangle
+                const [upperLeftX, upperLeftY] = feature.upperLeft;
+                const [lowerRightX, lowerRightY] = feature.lowerRight;
+
+                box.style.position = 'absolute';
+                box.style.left = upperLeftX + 'px';
+                box.style.top = upperLeftY + 'px';
+                box.style.width = (lowerRightX - upperLeftX) + 'px';
+                box.style.height = (lowerRightY - upperLeftY) + 'px';
+
+                // Append the rectangle to the figure element
+                figureElement.appendChild(box);
+
+                // ADd mouseover event to display feature description when hovering over the rectangle
+                box.addEventListener('mouseover', function () {
+                    descriptionElement.textContent = feature.description;
+                })
+            })
         }
-    }) 
+    }); 
 });
