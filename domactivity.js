@@ -11,18 +11,16 @@ addEventListener("DOMContentLoaded", (event) => {
         //create img element and source it properly
         var temp = document.createElement("img")
         temp.src = "/images/small/"+ids[i]+".jpg"
-        thisId = ids[i]
+        temp.setAttribute("data-value", ids[i])
         //create list element and store image in list element
         var li = document.createElement("li")
         li.appendChild(temp)
         li.addEventListener("click", (event) =>{
-            console.log(event.target)
-            identifier = event.target
+            identifier = event.target.getAttribute("data-value")
             for (i = 0; i<information.length; i++){
-                console.log("click", identifier)
                 if (information[i].id == identifier){
                     let loc = document.getElementById("full")
-                    loc.src = "/images/large/"+thisId+".jpg"
+                    loc.src = "/images/large/"+information[i].id+".jpg"
                 };
             };;
         })
