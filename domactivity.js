@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const paintingId = event.target.dataset.id;
             const selectedPainting = paintingsData.find(p => p.id === paintingId);
 
-            figureElement.innerHTMl = '';
+            figureElement.innerHTML = '';
 
             const largeImage = document.createElement('img');
             largeImage.src = `images/large/${selectedPainting.id}.jpg`; // Set the path to the larger image using the id
