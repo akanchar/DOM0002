@@ -19,11 +19,30 @@ addEventListener("DOMContentLoaded", (event) => {
             identifier = event.target.getAttribute("data-value")
             for (i = 0; i<information.length; i++){
                 if (information[i].id == identifier){
-                    let loc = document.getElementById("full")
-                    loc.src = ""
+                    var figure = document.getElementById("large_image")
+                    figure.innerHTML = ""
+                    loc = document.createElement("img")
                     loc.src = "/images/large/"+information[i].id+".jpg"
+                    document.getElementById("large_image").append(loc)
                     document.getElementById("title").innerHTML = information[i].title
                     document.getElementById("artist").innerHTML = "By " + information[i].artist
+                    for (item in information[i].features){
+                        let newBox = document.createElement("div")
+                        newBox.className = "box"
+                        newBox.style.position ="absolute"
+                        upLeft = information[i].features[item].upperLeft
+                        botRight = information[i].features[item].lowerRight
+                        console.log(upLeft)
+                        height = botRight[1]-upLeft[1]
+                        width = botRight[0]-upLeft[0]
+                        newBox.style.left = `${upLeft[0]}px`;
+                        newBox.style.top = `${upLeft[1]}px`;
+                        newBox.style.width = `${width}px`;
+                        newBox.style.height = `${height}px`;
+                        newBox.value = item.description
+                        console.log(newBox)
+                        document.getElementById("large_image").append(newBox)
+                    }
                 };
             };;
         })
