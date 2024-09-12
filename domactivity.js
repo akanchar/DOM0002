@@ -21,6 +21,7 @@ addEventListener("DOMContentLoaded", (event) => {
                 if (information[i].id == identifier){
                     var figure = document.getElementById("large_image")
                     figure.innerHTML = ""
+                    document.getElementById("description").innerHTML = ""
                     loc = document.createElement("img")
                     loc.src = "/images/large/"+information[i].id+".jpg"
                     document.getElementById("large_image").append(loc)
@@ -39,8 +40,11 @@ addEventListener("DOMContentLoaded", (event) => {
                         newBox.style.top = `${upLeft[1]}px`;
                         newBox.style.width = `${width}px`;
                         newBox.style.height = `${height}px`;
-                        newBox.value = item.description
+                        newBox.value = information[i].features[item].description
                         console.log(newBox)
+                        newBox.addEventListener("mouseover", (event) =>{
+                            document.getElementById("description").innerHTML = newBox.value
+                        })
                         document.getElementById("large_image").append(newBox)
                     }
                 };
