@@ -20,7 +20,10 @@ addEventListener("DOMContentLoaded", (event) => {
             for (i = 0; i<information.length; i++){
                 if (information[i].id == identifier){
                     let loc = document.getElementById("full")
+                    loc.src = ""
                     loc.src = "/images/large/"+information[i].id+".jpg"
+                    document.getElementById("title").innerHTML = information[i].title
+                    document.getElementById("artist").innerHTML = "By " + information[i].artist
                 };
             };;
         })
@@ -31,6 +34,4 @@ addEventListener("DOMContentLoaded", (event) => {
     for (i=0; i<thumbnailImages.length; i++){
         thumbList.appendChild(thumbnailImages[i])
     };
-
-
 });
