@@ -19,10 +19,20 @@ const imageFiles = [
     "118050.jpg"
 ];
 
-function loadPaintingInfo(e) { 
-    if (e.type == "click") {
-        // Apply a black border to the clicked element
-        e.target.style.border = "2px solid black";  // Correct syntax for applying a border
+function loadPaintingInfo(e) {
+    if (e.type === "click") {
+        // Get the clicked image
+        const clickedImage = e.target;
+        
+        // Extract the filename from the clicked image's src
+        const imageFileName = clickedImage.src.split('/').pop(); // E.g., '005010.jpg'
+        
+        // Construct the URL for the larger image
+        const largeImageUrl = `images/large/${imageFileName}`;
+        
+        // Update the larger image's src attribute
+        const fullImage = document.getElementById('full');
+        fullImage.src = largeImageUrl;
     }
 }
 
@@ -34,14 +44,15 @@ imageFiles.forEach(image => {
 
     // Create an <img> element
     const imgElement = document.createElement('img');
-    imgElement.src = imageFolder + image;
+    imgElement.src = `images/small/${image}`;
     imgElement.alt = image;  // You can set a more descriptive alt text here
     imgElement.classList.add("paintings");
     
     // Append the <img> to the <li>
     listItem.appendChild(imgElement);
 
-    listItem.addEventListener("click", loadPaintingInfo(e))
+    // Add event listener to handle clicks
+    listItem.addEventListener("click", loadPaintingInfo);
     
     // Append the <li> to the <ul>
     paintingsSection.appendChild(listItem);
