@@ -93,6 +93,10 @@ programmatically adding elements based on user actions and data in the  supplied
    data for that rectangle. For mouseout, simply empty the content of the
    textContent.
 
+## Rubric
+![image](https://github.com/user-attachments/assets/4f07682d-8827-45fe-89ac-2f95a8ba8ee8)
+
+
 ## Tips and Suggestions
 * Start small: Figure out the smaller working parts of the HTML, like adding the small images on the left side of the HTML.
 * **DON’T USE ABSOLUTE PATHS**. Use only relative paths in your project files. This practice is particularly important when multiple people are working on the same project, as it ensures that links and references work correctly across different environments and systems.
