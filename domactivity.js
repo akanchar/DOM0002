@@ -41,10 +41,13 @@ addEventListener("DOMContentLoaded", (event) => {
                         newBox.style.width = `${width}px`;
                         newBox.style.height = `${height}px`;
                         newBox.value = information[i].features[item].description
-                        console.log(newBox)
                         newBox.addEventListener("mouseover", (event) =>{
-                            document.getElementById("description").innerHTML = newBox.value
+                            document.getElementById("description").textContent = newBox.value
                         })
+                        newBox.addEventListener("mouseout", (event) =>{
+                            document.getElementById("description").textContent = ""
+                        })
+
                         document.getElementById("large_image").append(newBox)
                     }
                 };
