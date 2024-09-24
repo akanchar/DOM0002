@@ -1,3 +1,7 @@
+//believe this was file that we made to work on code together and not ruin main code file b/c of isssues
+// we were having with github that normal file (domactivity.js) should be our main file
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // Fetch the paintings.json file
     fetch('paintings.json')

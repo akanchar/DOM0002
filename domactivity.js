@@ -1,3 +1,7 @@
+// Connor + Liz
+//DOM 002
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // Fetch the paintings.json file
     fetch('paintings.json')
