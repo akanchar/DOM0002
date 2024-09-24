@@ -103,4 +103,3 @@ programmatically adding elements based on user actions and data in the  supplied
 * Iterate and Test: Continuously test your website after making necessary changes.
 * Issues: Use the GitHub to create Issues and track the status of the issues using Milestones.
 * Focus on Details: Pay attention to small details like spacing, hover effects, to create a polished final product.
-
